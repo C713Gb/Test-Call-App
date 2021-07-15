@@ -16,7 +16,7 @@ class CallRVAdapter(val context: Context, val callList: ArrayList<CallDataModel>
             itemView.phone_txt.text = callDataModel.phone
             itemView.type_txt.text = callDataModel.type
             itemView.date_txt.text = callDataModel.date.toString()
-            itemView.duration_txt.text = callDataModel.duration
+            itemView.duration_txt.text = callDataModel.duration + "seconds"
         }
 
     }

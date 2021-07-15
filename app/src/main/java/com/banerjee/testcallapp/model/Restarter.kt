@@ -39,6 +39,9 @@ class Restarter: BroadcastReceiver() {
                         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         context!!.startActivity(i)
                     }
+                    TelephonyManager.CALL_STATE_IDLE -> {
+                        showToastMessage(context, "Call ended. Caller's number is $incomingNumber.")
+                    }
                 }
             }
         }
@@ -49,12 +52,11 @@ class Restarter: BroadcastReceiver() {
 //            TelephonyManager.EXTRA_STATE_OFFHOOK){
 //            Log.d("TAG", "onReceive: Phone call has started...")
 //        }
-//        else if (intent.getStringExtra(TelephonyManager.EXTRA_STATE) ==
-//            TelephonyManager.EXTRA_STATE_IDLE){
-//            showToastMessage(context!!, "Phone call has ended...")
-//            val i1 = Intent(context!!.applicationContext, HomeActivity::class.java)
-//            i1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//            context.startActivity(i1)
+//        if (intent != null) {
+//            if (intent.getStringExtra(TelephonyManager.EXTRA_STATE) ==
+//                TelephonyManager.EXTRA_STATE_IDLE){
+//                showToastMessage(context!!, "Phone call has ended...")
+//            }
 //        }
 //        else if (intent.getStringExtra(TelephonyManager.EXTRA_STATE) ==
 //            TelephonyManager.EXTRA_STATE_RINGING){
