@@ -2,13 +2,15 @@ package com.banerjee.testcallapp
 
 import android.app.ProgressDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.banerjee.testcallapp.model.UserAuthDataClasses
 import com.banerjee.testcallapp.network.ApiCallInterface
 import com.banerjee.testcallapp.network.RetrofitClientInstance
@@ -17,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.create
+
 
 class SignupActivity : AppCompatActivity() {
 
@@ -135,18 +137,38 @@ class SignupActivity : AppCompatActivity() {
 
         })
 
-        signup_btn.setOnClickListener { signUp() }
+        signup_btn.setOnClickListener {
+
+            if (name.length > 0 && mobile.length > 0 && email.length > 0 && pwd.length > 0 && countryCode.length > 0
+                && isTerms.length > 0){
+                if (isTerms == "true"){
+                    if (isValidEmail(email))
+                        signUp()
+                    else
+                        Toast.makeText(this@SignupActivity, "Invalid email", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(this@SignupActivity, "Accept Terms and Conditions", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else{
+                Toast.makeText(this@SignupActivity, "Fill all details", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        terms_conditions.setOnCheckedChangeListener { buttonView, isChecked ->
+            isTerms = isChecked.toString()
+        }
 
         login_txt.setOnClickListener { goToLoginPage() }
     }
 
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return !TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches()
+    }
+
     private fun signUp() {
 
-        if (name.isNotEmpty()) {
-//            Toast.makeText(this@SignupActivity, "Not Empty", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this@SignupActivity, "Empty", Toast.LENGTH_SHORT).show()
-        }
 
         val signUpModel: UserAuthDataClasses.SignUpModel = UserAuthDataClasses.SignUpModel(
             Name = name,

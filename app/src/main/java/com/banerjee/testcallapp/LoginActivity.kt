@@ -90,7 +90,12 @@ class LoginActivity : AppCompatActivity() {
 
         })
 
-        login_btn.setOnClickListener { login() }
+        login_btn.setOnClickListener {
+            if (email.length > 0 && pwd.length > 0)
+                login()
+            else
+                Toast.makeText(this@LoginActivity, "Fill all the details", Toast.LENGTH_SHORT).show()
+        }
 
         signup_txt.setOnClickListener { goToSignupPage() }
     }

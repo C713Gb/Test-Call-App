@@ -152,6 +152,10 @@ class HomeActivity : AppCompatActivity() {
                 CallLog.Calls.MISSED_TYPE -> dir = "MISSED"
             }
 
+            if (dir == null || dir.length == 0){
+                dir = "REJECTED"
+            }
+
             val  callDataModel = CallDataModel(
                 phone = phNumber,
                 type = dir,
